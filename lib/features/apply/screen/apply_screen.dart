@@ -3,6 +3,9 @@ import 'package:class_champion/core/widget/screen_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../profile/screen/profile_screen.dart';
+import 'from_screen.dart';
+
 class ApplyScreen extends StatefulWidget {
   const ApplyScreen({super.key});
 
@@ -500,7 +503,9 @@ class _LoginFormState extends State<_LoginForm> {
                 ),
               ),
 
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen(),));
+              },
 
               child: Text(
                 "Sign In",
@@ -793,7 +798,9 @@ class _RegisterFormState extends State<_RegisterForm> {
                 ),
               ),
 
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => FormScreen(),));
+              },
 
               child: Text(
                 "Create Account",
@@ -810,7 +817,6 @@ class _RegisterFormState extends State<_RegisterForm> {
           Center(
             child: InkWell(
               onTap: widget.onToggle,
-
               child: RichText(
                 text: TextSpan(
                   text: "Already have an account? ",

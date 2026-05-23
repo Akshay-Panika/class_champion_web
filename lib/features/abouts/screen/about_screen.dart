@@ -19,8 +19,7 @@ class AboutScreen extends StatelessWidget {
           LayoutBuilder(
             builder: (context, constraints) {
 
-              if (ScreenHelper.isDesktop(context) ||
-                  ScreenHelper.isTablet(context)) {
+              if (ScreenHelper.isDesktop(context) || ScreenHelper.isTablet(context)) {
                 return const _DesktopView();
               }
 
@@ -43,14 +42,6 @@ class AboutScreen extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(35),
-
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.04),
-                  blurRadius: 20,
-                  offset: const Offset(0, 8),
-                ),
-              ],
             ),
 
             child: Column(
@@ -94,11 +85,60 @@ class AboutScreen extends StatelessWidget {
 
                 const SizedBox(height: 40),
 
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 24,
-                  runSpacing: 24,
+                ScreenHelper.isDesktop(context)
+                    ? Row(
+                  children: [
 
+                    Expanded(
+                      child: _buildInfoCard(
+                        context,
+                        "15K+",
+                        "Active Students",
+                        Icons.groups_rounded,
+                      ),
+                    ),
+
+                    const SizedBox(width: 16),
+
+                    Expanded(
+                      child: _buildInfoCard(
+                        context,
+                        "120+",
+                        "Mock Tests",
+                        Icons.menu_book_rounded,
+                      ),
+                    ),
+
+                    const SizedBox(width: 16),
+
+                    Expanded(
+                      child: _buildInfoCard(
+                        context,
+                        "98%",
+                        "Success Rate",
+                        Icons.emoji_events_rounded,
+                      ),
+                    ),
+
+                    const SizedBox(width: 16),
+
+                    Expanded(
+                      child: _buildInfoCard(
+                        context,
+                        "24/7",
+                        "Learning Support",
+                        Icons.support_agent_rounded,
+                      ),
+                    ),
+                  ],
+                )
+                    : GridView.count(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  childAspectRatio: 1.2,
                   children: [
 
                     _buildInfoCard(
@@ -129,7 +169,7 @@ class AboutScreen extends StatelessWidget {
                       Icons.support_agent_rounded,
                     ),
                   ],
-                ),
+                )
               ],
             ),
           ),
@@ -149,9 +189,7 @@ Widget _buildInfoCard(
     IconData icon,
     ) {
   return Container(
-    width: 220,
-
-    padding: const EdgeInsets.all(24),
+    padding: const EdgeInsets.all(10),
 
     decoration: BoxDecoration(
       color: Colors.white,
@@ -160,18 +198,11 @@ Widget _buildInfoCard(
       border: Border.all(
         color: Colors.black12,
       ),
-
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(0.03),
-          blurRadius: 12,
-          offset: const Offset(0, 5),
-        ),
-      ],
     ),
 
     child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
 
         Container(
@@ -200,14 +231,13 @@ Widget _buildInfoCard(
 
             fontSize: RFont.size(
               context,
-              24,
-              tablet: 28,
-              desktop: 32,
+              16,
+              tablet: 16,
+              desktop: 18,
             ),
           ),
         ),
 
-        const SizedBox(height: 8),
 
         Text(
           title,
@@ -218,9 +248,9 @@ Widget _buildInfoCard(
 
             fontSize: RFont.size(
               context,
-              13,
+              12,
               tablet: 14,
-              desktop: 15,
+              desktop: 14,
             ),
           ),
         ),

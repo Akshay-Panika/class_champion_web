@@ -544,7 +544,7 @@ class BottomTabCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        vertical: 24,
+        vertical: 14,
         horizontal: 16,
       ),
       decoration: BoxDecoration(
@@ -568,7 +568,7 @@ class BottomTabCard extends StatelessWidget {
 
           /// ICON
           Container(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: color,
               shape: BoxShape.circle,
@@ -576,7 +576,7 @@ class BottomTabCard extends StatelessWidget {
             child: Icon(
               icon,
               color: Colors.black,
-              size: 24,
+              size: 20,
             ),
           ),
 
@@ -591,9 +591,9 @@ class BottomTabCard extends StatelessWidget {
               fontWeight: FontWeight.w600,
               fontSize: RFont.size(
                 context,
-                13,
-                tablet: 15,
-                desktop: 15,
+                12,
+                tablet: 14,
+                desktop: 16,
               ),
             ),
           ),
