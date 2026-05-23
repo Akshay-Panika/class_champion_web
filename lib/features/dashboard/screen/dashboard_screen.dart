@@ -203,6 +203,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         Row(
                           spacing: 20,
                           children: [
+                            if(!ScreenHelper.isMobile(context))
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.white,

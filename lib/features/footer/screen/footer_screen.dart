@@ -158,7 +158,7 @@ class _BrandDescriptionBlock extends StatelessWidget {
             CircleAvatar(
               radius: 12,
               backgroundColor: Colors.blue.shade100,
-              child:  Icon(Icons.school, size: 14, color: Colors.blue),
+              child:  Icon(Icons.school, size: 14, color: Color(0xFF3B66F5),),
             ),
             const SizedBox(width: 8),
              Text(

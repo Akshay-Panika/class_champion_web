@@ -23,8 +23,8 @@ class PackageScreen extends StatelessWidget {
                 SizedBox(height: 100,),
                 Container(
                   padding: EdgeInsets.symmetric(
-                    horizontal: isDesktop ? 50.0 : 24.0,
-                    vertical: isDesktop ? 50.0 : 40.0,
+                    horizontal: isDesktop ? 50.0 : 14.0,
+                    vertical: isDesktop ? 50.0 : 16.0,
                   ),
                   decoration: BoxDecoration(
                     color:Color(0xFF3B66F5),
@@ -43,7 +43,7 @@ class PackageScreen extends StatelessWidget {
             )
           ),
          Positioned(
-            right: 40,
+            right: isDesktop ? 40:0,
             bottom: -12,
             top: -40,
             child: Image.asset(
@@ -65,7 +65,7 @@ class PackageScreen extends StatelessWidget {
       children: [
         // Heading Text
         Text(
-          "The Best Practice Exercises for\nCELPIP Exam Preparation",
+          "The Best Practice Exercises for\nClass Champion Exam Preparation",
           textAlign:  TextAlign.start,
           style: GoogleFonts.poppins(
             color: Colors.white,
