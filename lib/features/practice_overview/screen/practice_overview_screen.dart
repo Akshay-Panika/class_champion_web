@@ -35,8 +35,8 @@ class _DesktopView extends StatelessWidget {
 
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: 80,
-          vertical: 60,
+          horizontal: 100,
+          vertical: 80,
         ),
 
         child: Row(
@@ -275,12 +275,12 @@ class _MobileView extends StatelessWidget {
               /// TAG
               Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
+                  horizontal: 18,
+                  vertical: 10,
                 ),
 
                 decoration: BoxDecoration(
-                  color: Colors.blue.withOpacity(.10),
+                  color: const Color(0xFFF07E3F),
                   borderRadius: BorderRadius.circular(30),
                 ),
 
@@ -288,7 +288,7 @@ class _MobileView extends StatelessWidget {
                   "Practice Overview",
 
                   style: GoogleFonts.poppins(
-                    color: Colors.blue,
+                    color: Colors.white,
                     fontWeight: FontWeight.w600,
 
                     fontSize: RFont.size(
@@ -350,110 +350,75 @@ class _MobileView extends StatelessWidget {
                 height: 250,
                 width: double.infinity,
 
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(24),
-
-                  gradient: const LinearGradient(
-                    colors: [
-                      Color(0xff2563EB),
-                      Color(0xff7C3AED),
-                    ],
-                  ),
-                ),
-
-                child: Center(
-                  child: Icon(
-                    Icons.school_rounded,
-
-                    size: RFont.size(
-                      context,
-                      100,
-                      tablet: 140,
-                      desktop: 180,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.contain,
+                    image: AssetImage(
+                      'assets/image/shoolboy.jpg',
                     ),
-
-                    color: Colors.white,
                   ),
                 ),
               ),
 
               const SizedBox(height: 35),
 
-              /// START BUTTON
-              SizedBox(
-                width: double.infinity,
-
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 20,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF3B66F5),
+                      foregroundColor: Colors.white,
+                      elevation: 0,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 26,
+                        vertical: 20,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
                     ),
-
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
+                    onPressed: () {},
+                    child: Text(
+                      "Start Practice",
                     ),
                   ),
 
-                  onPressed: () {},
+                  const SizedBox(width: 20),
 
-                  child: Text(
-                    "Start Practice",
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(
+                        color: Colors.black12,
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 26,
+                        vertical: 20,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
 
-                    style: GoogleFonts.poppins(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
+                    onPressed: () {},
 
-                      fontSize: RFont.size(
-                        context,
-                        12,
-                        tablet: 15,
-                        desktop: 16,
+                    child: Text(
+                      "View Results",
+
+                      style: GoogleFonts.poppins(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+
+                        fontSize: RFont.size(
+                          context,
+                          12,
+                          tablet: 14,
+                          desktop: 16,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
-
-              const SizedBox(height: 16),
-
-              /// RESULT BUTTON
-              SizedBox(
-                width: double.infinity,
-
-                child: OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    side: const BorderSide(
-                      color: Colors.black12,
-                    ),
-
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 20,
-                    ),
-
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                  ),
-
-                  onPressed: () {},
-
-                  child: Text(
-                    "View Results",
-
-                    style: GoogleFonts.poppins(
-                      color: Colors.black,
-
-                      fontSize: RFont.size(
-                        context,
-                        12,
-                        tablet: 15,
-                        desktop: 16,
-                      ),
-                    ),
-                  ),
-                ),
+                ],
               ),
 
               const SizedBox(height: 35),

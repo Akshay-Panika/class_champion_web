@@ -315,8 +315,8 @@ class _MainScoreReportCard extends StatelessWidget {
             children: [
               Image.asset(
                 'assets/image/shoolboy.jpg',
-                height: 45,
-                width: 45,
+                height: 100,
+                width: 100,
                 errorBuilder: (c, e, s) => const Icon(Icons.face, size: 30, color: Colors.grey),
               ),
               Row(

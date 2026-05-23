@@ -3,22 +3,44 @@ import 'package:class_champion/core/widget/screen_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ApplyScreen extends StatelessWidget {
+class ApplyScreen extends StatefulWidget {
   const ApplyScreen({super.key});
+
+  @override
+  State<ApplyScreen> createState() => _ApplyScreenState();
+}
+
+class _ApplyScreenState extends State<ApplyScreen> {
+
+  bool _register = false;
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
 
-        /// DESKTOP + TABLET SAME LAYOUT
+        /// DESKTOP + TABLET
         if (ScreenHelper.isDesktop(context) ||
             ScreenHelper.isTablet(context)) {
-          return const _DesktopTabletView();
+          return _DesktopTabletView(
+            register: _register,
+            onToggle: () {
+              setState(() {
+                _register = !_register;
+              });
+            },
+          );
         }
 
-        /// MOBILE VIEW
-        return const _MobileView();
+        /// MOBILE
+        return _MobileView(
+          register: _register,
+          onToggle: () {
+            setState(() {
+              _register = !_register;
+            });
+          },
+        );
       },
     );
   }
@@ -26,13 +48,20 @@ class ApplyScreen extends StatelessWidget {
 
 /// ================= DESKTOP + TABLET =================
 class _DesktopTabletView extends StatelessWidget {
-  const _DesktopTabletView();
+
+  final bool register;
+  final VoidCallback onToggle;
+
+  const _DesktopTabletView({
+    required this.register,
+    required this.onToggle,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      color: Colors.white,
+      color: const Color(0xFFF8FAFF),
 
       padding: const EdgeInsets.symmetric(
         horizontal: 80,
@@ -63,7 +92,7 @@ class _DesktopTabletView extends StatelessWidget {
                   ),
 
                   child: Text(
-                    "Apply Now",
+                    register ? "Register Now" : "Apply Now",
 
                     style: GoogleFonts.poppins(
                       color: Colors.white,
@@ -82,7 +111,9 @@ class _DesktopTabletView extends StatelessWidget {
                 const SizedBox(height: 25),
 
                 Text(
-                  "Start Your\nScholarship Journey",
+                  register
+                      ? "Create Your\nStudent Account"
+                      : "Start Your\nScholarship Journey",
 
                   style: GoogleFonts.poppins(
                     color: Colors.black,
@@ -101,7 +132,9 @@ class _DesktopTabletView extends StatelessWidget {
                 const SizedBox(height: 20),
 
                 Text(
-                  "Login and continue your scholarship journey with Class Champion platform.",
+                  register
+                      ? "Join Class Champion and start your scholarship journey with smart learning and mock tests."
+                      : "Login and continue your scholarship journey with Class Champion platform.",
 
                   style: GoogleFonts.poppins(
                     color: Colors.black54,
@@ -138,10 +171,12 @@ class _DesktopTabletView extends StatelessWidget {
 
           const SizedBox(width: 60),
 
-          /// RIGHT SIDE FORM
-          const Expanded(
+          /// RIGHT SIDE
+          Expanded(
             flex: 1,
-            child: _LoginForm(),
+            child: register
+                ? _RegisterForm(onToggle: onToggle)
+                : _LoginForm(onToggle: onToggle),
           ),
         ],
       ),
@@ -151,13 +186,20 @@ class _DesktopTabletView extends StatelessWidget {
 
 /// ================= MOBILE VIEW =================
 class _MobileView extends StatelessWidget {
-  const _MobileView();
+
+  final bool register;
+  final VoidCallback onToggle;
+
+  const _MobileView({
+    required this.register,
+    required this.onToggle,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      color: Colors.white,
+      color: const Color(0xFFF8FAFF),
 
       padding: const EdgeInsets.symmetric(
         horizontal: 20,
@@ -180,7 +222,7 @@ class _MobileView extends StatelessWidget {
             ),
 
             child: Text(
-              "Apply Now",
+              register ? "Register Now" : "Apply Now",
 
               style: GoogleFonts.poppins(
                 color: Colors.white,
@@ -192,7 +234,9 @@ class _MobileView extends StatelessWidget {
           const SizedBox(height: 25),
 
           Text(
-            "Start Your\nScholarship Journey",
+            register
+                ? "Create Your\nStudent Account"
+                : "Start Your\nScholarship Journey",
 
             style: GoogleFonts.poppins(
               color: Colors.black,
@@ -209,7 +253,9 @@ class _MobileView extends StatelessWidget {
           const SizedBox(height: 20),
 
           Text(
-            "Login and continue your scholarship journey.",
+            register
+                ? "Join Class Champion and start your scholarship journey."
+                : "Login and continue your scholarship journey.",
 
             style: GoogleFonts.poppins(
               color: Colors.black54,
@@ -242,7 +288,9 @@ class _MobileView extends StatelessWidget {
 
           const SizedBox(height: 35),
 
-          const _LoginForm(),
+          register
+              ? _RegisterForm(onToggle: onToggle)
+              : _LoginForm(onToggle: onToggle),
         ],
       ),
     );
@@ -251,7 +299,12 @@ class _MobileView extends StatelessWidget {
 
 /// ================= LOGIN FORM =================
 class _LoginForm extends StatefulWidget {
-  const _LoginForm();
+
+  final VoidCallback onToggle;
+
+  const _LoginForm({
+    required this.onToggle,
+  });
 
   @override
   State<_LoginForm> createState() => _LoginFormState();
@@ -260,6 +313,7 @@ class _LoginForm extends StatefulWidget {
 class _LoginFormState extends State<_LoginForm> {
 
   bool isPasswordVisible = false;
+  bool isChecked = true;
 
   @override
   Widget build(BuildContext context) {
@@ -288,7 +342,6 @@ class _LoginFormState extends State<_LoginForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
 
-          /// TITLE
           Text(
             "Sign In",
 
@@ -324,7 +377,6 @@ class _LoginFormState extends State<_LoginForm> {
 
           const SizedBox(height: 30),
 
-          /// EMAIL
           _buildField(
             context,
             "Email Address",
@@ -333,29 +385,13 @@ class _LoginFormState extends State<_LoginForm> {
 
           const SizedBox(height: 20),
 
-          /// PASSWORD
           TextFormField(
             obscureText: !isPasswordVisible,
 
-            decoration: InputDecoration(
-              hintText: "Password",
-
-              hintStyle: GoogleFonts.poppins(
-                color: Colors.black45,
-
-                fontSize: RFont.size(
-                  context,
-                  13,
-                  tablet: 14,
-                  desktop: 15,
-                ),
-              ),
-
-              prefixIcon: const Icon(
-                Icons.lock_outline,
-                color: Colors.black54,
-              ),
-
+            decoration: _inputDecoration(
+              context,
+              "Password",
+              Icons.lock_outline,
               suffixIcon: IconButton(
                 onPressed: () {
                   setState(() {
@@ -367,62 +403,27 @@ class _LoginFormState extends State<_LoginForm> {
                   isPasswordVisible
                       ? Icons.visibility_off
                       : Icons.visibility,
-                  color: Colors.black54,
-                ),
-              ),
-
-              filled: true,
-              fillColor: Colors.grey.shade100,
-
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 20,
-              ),
-
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(18),
-                borderSide: BorderSide.none,
-              ),
-            ),
-          ),
-
-          const SizedBox(height: 14),
-
-          /// FORGOT PASSWORD
-          Align(
-            alignment: Alignment.centerRight,
-
-            child: TextButton(
-              onPressed: () {},
-
-              child: Text(
-                "Forgot Password?",
-
-                style: GoogleFonts.poppins(
-                  color: const Color(0xFF3B66F5),
-                  fontWeight: FontWeight.w500,
-
-                  fontSize: RFont.size(
-                    context,
-                    12,
-                    tablet: 13,
-                    desktop: 14,
-                  ),
                 ),
               ),
             ),
           ),
 
           const SizedBox(height: 15),
-          /// TERMS & CONDITIONS
+
+          /// TERMS
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
               Checkbox(
-                value: true,
+                value: isChecked,
                 activeColor: const Color(0xFF3B66F5),
-                onChanged: (value) {},
+
+                onChanged: (value) {
+                  setState(() {
+                    isChecked = value!;
+                  });
+                },
               ),
 
               Expanded(
@@ -481,7 +482,6 @@ class _LoginFormState extends State<_LoginForm> {
 
           const SizedBox(height: 20),
 
-          /// SIGN IN BUTTON
           SizedBox(
             width: double.infinity,
 
@@ -507,13 +507,6 @@ class _LoginFormState extends State<_LoginForm> {
 
                 style: GoogleFonts.poppins(
                   fontWeight: FontWeight.w600,
-
-                  fontSize: RFont.size(
-                    context,
-                    14,
-                    tablet: 15,
-                    desktop: 16,
-                  ),
                 ),
               ),
             ),
@@ -521,82 +514,385 @@ class _LoginFormState extends State<_LoginForm> {
 
           const SizedBox(height: 25),
 
-          /// REGISTER TEXT
           Center(
-            child: RichText(
-              text: TextSpan(
-                text: "Don’t have an account? ",
+            child: InkWell(
+              onTap: widget.onToggle,
 
-                style: GoogleFonts.poppins(
-                  color: Colors.black54,
+              child: RichText(
+                text: TextSpan(
+                  text: "Don’t have an account? ",
 
-                  fontSize: RFont.size(
-                    context,
-                    13,
-                    tablet: 14,
-                    desktop: 15,
+                  style: GoogleFonts.poppins(
+                    color: Colors.black54,
                   ),
-                ),
 
-                children: [
-                  TextSpan(
-                    text: "Register Now",
+                  children: [
+                    TextSpan(
+                      text: "Register Now",
 
-                    style: GoogleFonts.poppins(
-                      color: const Color(0xFF3B66F5),
-                      fontWeight: FontWeight.w600,
+                      style: GoogleFonts.poppins(
+                        color: const Color(0xFF3B66F5),
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
-
-
         ],
       ),
     );
   }
 }
 
-/// ================= COMMON TEXTFIELD =================
+/// ================= REGISTER FORM =================
+class _RegisterForm extends StatefulWidget {
+
+  final VoidCallback onToggle;
+
+  const _RegisterForm({
+    required this.onToggle,
+  });
+
+  @override
+  State<_RegisterForm> createState() => _RegisterFormState();
+}
+
+class _RegisterFormState extends State<_RegisterForm> {
+
+  bool isPasswordVisible = false;
+  bool isConfirmPasswordVisible = false;
+  bool isChecked = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(35),
+
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(30),
+
+        border: Border.all(
+          color: Colors.black12,
+        ),
+
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(.08),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
+
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+
+          Text(
+            "Sign Up",
+
+            style: GoogleFonts.poppins(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+
+              fontSize: RFont.size(
+                context,
+                22,
+                tablet: 24,
+                desktop: 28,
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 8),
+
+          Text(
+            "Sign Up to continue your scholarship journey",
+
+            style: GoogleFonts.poppins(
+              color: Colors.black54,
+
+              fontSize: RFont.size(
+                context,
+                13,
+                tablet: 14,
+                desktop: 15,
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 30),
+
+          _buildField(
+            context,
+            "Full Name",
+            Icons.person_outline_rounded,
+          ),
+
+          const SizedBox(height: 20),
+
+          _buildField(
+            context,
+            "Email Address",
+            Icons.email_outlined,
+          ),
+
+          const SizedBox(height: 20),
+
+          _buildField(
+            context,
+            "Phone Number",
+            Icons.phone_outlined,
+          ),
+
+          const SizedBox(height: 20),
+
+          TextFormField(
+            obscureText: !isPasswordVisible,
+
+            decoration: _inputDecoration(
+              context,
+              "Password",
+              Icons.lock_outline_rounded,
+
+              suffixIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    isPasswordVisible = !isPasswordVisible;
+                  });
+                },
+
+                icon: Icon(
+                  isPasswordVisible
+                      ? Icons.visibility_off
+                      : Icons.visibility,
+                ),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 20),
+
+          TextFormField(
+            obscureText: !isConfirmPasswordVisible,
+
+            decoration: _inputDecoration(
+              context,
+              "Confirm Password",
+              Icons.lock_outline_rounded,
+
+              suffixIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    isConfirmPasswordVisible =
+                    !isConfirmPasswordVisible;
+                  });
+                },
+
+                icon: Icon(
+                  isConfirmPasswordVisible
+                      ? Icons.visibility_off
+                      : Icons.visibility,
+                ),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 18),
+
+          /// TERMS & CONDITIONS
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+
+              Checkbox(
+                value: isChecked,
+                activeColor: const Color(0xFF3B66F5),
+
+                onChanged: (value) {
+                  setState(() {
+                    isChecked = value!;
+                  });
+                },
+              ),
+
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 12),
+
+                  child: RichText(
+                    text: TextSpan(
+                      text: "I agree to the ",
+
+                      style: GoogleFonts.poppins(
+                        color: Colors.black54,
+
+                        fontSize: RFont.size(
+                          context,
+                          12,
+                          tablet: 13,
+                          desktop: 14,
+                        ),
+                      ),
+
+                      children: [
+
+                        TextSpan(
+                          text: "Terms & Conditions",
+
+                          style: GoogleFonts.poppins(
+                            color: const Color(0xFF3B66F5),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+
+                        TextSpan(
+                          text: " and ",
+
+                          style: GoogleFonts.poppins(
+                            color: Colors.black54,
+                          ),
+                        ),
+
+                        TextSpan(
+                          text: "Privacy Policy",
+
+                          style: GoogleFonts.poppins(
+                            color: const Color(0xFF3B66F5),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 25),
+
+          SizedBox(
+            width: double.infinity,
+
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF3B66F5),
+                foregroundColor: Colors.white,
+                elevation: 0,
+
+                padding: const EdgeInsets.symmetric(
+                  vertical: 20,
+                ),
+
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18),
+                ),
+              ),
+
+              onPressed: () {},
+
+              child: Text(
+                "Create Account",
+
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 25),
+
+          Center(
+            child: InkWell(
+              onTap: widget.onToggle,
+
+              child: RichText(
+                text: TextSpan(
+                  text: "Already have an account? ",
+
+                  style: GoogleFonts.poppins(
+                    color: Colors.black54,
+                  ),
+
+                  children: [
+                    TextSpan(
+                      text: "Sign In",
+
+                      style: GoogleFonts.poppins(
+                        color: const Color(0xFF3B66F5),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// ================= COMMON FIELD =================
 Widget _buildField(
     BuildContext context,
     String hint,
     IconData icon,
     ) {
   return TextFormField(
-    decoration: InputDecoration(
-      hintText: hint,
+    decoration: _inputDecoration(
+      context,
+      hint,
+      icon,
+    ),
+  );
+}
 
-      hintStyle: GoogleFonts.poppins(
-        color: Colors.black45,
+/// ================= INPUT DECORATION =================
+InputDecoration _inputDecoration(
+    BuildContext context,
+    String hint,
+    IconData icon, {
+      Widget? suffixIcon,
+    }) {
+  return InputDecoration(
+    hintText: hint,
 
-        fontSize: RFont.size(
-          context,
-          13,
-          tablet: 14,
-          desktop: 15,
-        ),
+    hintStyle: GoogleFonts.poppins(
+      color: Colors.black45,
+
+      fontSize: RFont.size(
+        context,
+        13,
+        tablet: 14,
+        desktop: 15,
       ),
+    ),
 
-      prefixIcon: Icon(
-        icon,
-        color: Colors.black54,
-      ),
+    prefixIcon: Icon(
+      icon,
+      color: Colors.black54,
+    ),
 
-      filled: true,
-      fillColor: Colors.grey.shade100,
+    suffixIcon: suffixIcon,
 
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 20,
-      ),
+    filled: true,
+    fillColor: Colors.grey.shade100,
 
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(18),
-        borderSide: BorderSide.none,
-      ),
+    contentPadding: const EdgeInsets.symmetric(
+      horizontal: 20,
+      vertical: 20,
+    ),
+
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(18),
+      borderSide: BorderSide.none,
     ),
   );
 }

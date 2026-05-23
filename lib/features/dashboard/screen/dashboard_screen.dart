@@ -1,7 +1,9 @@
 import 'package:class_champion/core/widget/responsive_font.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/widget/screen_helper.dart';
+import '../../abouts/screen/about_screen.dart';
 import '../../apply/screen/apply_screen.dart';
 import '../../footer/screen/footer_screen.dart';
 import '../../home/screen/home_screen.dart';
@@ -29,14 +31,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   final List<Widget> navScreen = [
     const HomeScreen(),
+     AboutScreen(),
     const PracticeOverviewScreen(),
     const ApplyScreen(),
   ];
 
   /// SCROLL TO TOP
   void scrollTop() {
-    _scrollController.animateTo(
-      0,
+    _scrollController.animateTo(0,
       duration: const Duration(milliseconds: 600),
       curve: Curves.easeInOut,
     );
@@ -57,7 +59,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     });
   }
 
-  /// NAVIGATION BUTTON
   Widget navButton(
       String title,
       VoidCallback onTap,
@@ -67,10 +68,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
       child: Text(
         title,
-
         style: GoogleFonts.poppins(
           color: Colors.white,
           fontWeight: FontWeight.w500,
+          fontSize: RFont.size(context, 12,tablet: 12,desktop: 14)
         ),
       ),
     );
@@ -93,7 +94,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           SliverAppBar(
             floating: true,
             // pinned: true,
-            toolbarHeight: isMenuOpen && !isDesktop ? 300 : 80,
+            toolbarHeight: isMenuOpen && !isDesktop ? 400 : 80,
             backgroundColor: Colors.white,
             surfaceTintColor: Colors.white,
             elevation: 0,
@@ -122,9 +123,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     /// TOP NAVBAR
                     Row(
                       mainAxisAlignment:
-                      isDesktop
-                          ? MainAxisAlignment.spaceBetween
-                          : MainAxisAlignment.spaceBetween,
+                      isDesktop ? MainAxisAlignment.spaceBetween : MainAxisAlignment.spaceBetween,
 
                       children: [
 
@@ -145,14 +144,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               style: GoogleFonts.poppins(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
-                                fontSize: RFont.size(context, 14,tablet: 14,desktop: 16),
+                                fontSize: RFont.size(context, 12,tablet: 12,desktop: 14),
                               ),
                             ),
                           ],
                         ),
 
                         /// DESKTOP MENU
-                        if (isDesktop)
+                         if (isDesktop)
                           Row(
                             children: [
 
@@ -168,10 +167,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               ),
 
                               navButton(
+                                "About Us",
+                                   () {
+                                     setState(() {
+                                       selectedIndex = 1;
+                                     });
+                                     scrollTop();
+                                   },
+                              ),
+
+                              navButton(
                                 "Practice Overview",
                                     () {
                                   setState(() {
-                                    selectedIndex = 1;
+                                    selectedIndex = 2;
                                   });
 
                                   scrollTop();
@@ -188,89 +197,72 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   scrollToFooter();
                                 },
                               ),
-
-                              navButton(
-                                "Apply",
-                                    () {
-                                  setState(() {
-                                    selectedIndex = 2;
-                                  });
-
-                                  scrollTop();
-                                },
-                              ),
-
-                              const SizedBox(width: 20),
-
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  foregroundColor: Colors.blue,
-                                ),
-
-                                onPressed: () {},
-
-                                child: Text(
-                                  "Language",
-
-                                  style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500,
-                                    color: Color(0xFF3B66F5),
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
 
-                        /// MOBILE MENU ICON
-                        if (!isDesktop)
-                          Row(
-                            children: [
-
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  foregroundColor: Colors.blue,
-                                ),
-
-                                onPressed: () {},
-
-                                child: Text(
-                                  "Language",
-
-                                  style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: RFont.size(context, 12,tablet: 14,desktop: 16)
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  foregroundColor: Colors.blue,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    isMenuOpen = !isMenuOpen;
-                                  });
-                                },
-
-                                child: Icon(
-                                  isMenuOpen
-                                      ? Icons.close
-                                      : Icons.menu,
-                                  color: Colors.blue,
-                                ),
+                        Row(
+                          spacing: 20,
+                          children: [
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.blue,
                               ),
 
+                              onPressed: () {
+                                setState(() {
+                                  selectedIndex = 3;
+                                });
 
-                            ],
-                          ),
+                                scrollTop();
+                              },
+
+                              child: Text(
+                                "Sign In/Sign Up",
+                                style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xFF3B66F5),
+                                    fontSize: RFont.size(context, 12,tablet: 12,desktop: 12)
+                                ),
+                              ),
+                            ),
+
+                            if(isDesktop)
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.blue,
+                              ),
+
+                              onPressed: () {},
+                              child: FaIcon(FontAwesomeIcons.language, color: Color(0xFF3B66F5),),
+                            ),
+
+                            if(!isDesktop)
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.blue,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  isMenuOpen = !isMenuOpen;
+                                });
+                              },
+
+                              child: Icon(
+                                isMenuOpen
+                                    ? Icons.close
+                                    : Icons.menu,
+                                color: Color(0xFF3B66F5),
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
 
-                    /// MOBILE DROPDOWN MENU
+                     /// MOBILE DROPDOWN MENU
                     if (!isDesktop && isMenuOpen)
                       Container(
                         margin: const EdgeInsets.only(top: 20),
@@ -296,13 +288,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 scrollTop();
                               },
                             ),
+                            mobileMenuButton(
+                              title: "About Us",
+                              onTap: () {
+                                setState(() {
+                                  selectedIndex = 1;
+                                  isMenuOpen = false;
+                                });
+
+                                scrollTop();
+                              },
+                            ),
 
                             /// PRACTICE
                             mobileMenuButton(
                               title: "Practice Overview",
                               onTap: () {
                                 setState(() {
-                                  selectedIndex = 1;
+                                  selectedIndex = 2;
                                   isMenuOpen = false;
                                 });
 
@@ -325,15 +328,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                             /// APPLY
                             mobileMenuButton(
-                              title: "Apply",
+                              title: "Sign In/Sign Up",
                               onTap: () {
                                 setState(() {
-                                  selectedIndex = 2;
+                                  selectedIndex = 3;
                                   isMenuOpen = false;
                                 });
 
                                 scrollTop();
                               },
+                            ),
+
+                            mobileMenuButton(
+                              title: "Language",
+                              onTap: () => null,
                             ),
                           ],
                         ),
@@ -378,7 +386,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
         child: Text(
           title,
-
           style: GoogleFonts.poppins(
             color: Colors.black87,
             fontWeight: FontWeight.w500,

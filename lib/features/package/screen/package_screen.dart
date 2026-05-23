@@ -14,7 +14,7 @@ class PackageScreen extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 40),
       child: Stack(
-        clipBehavior: Clip.none, // Mascot ko banner se bahar nikalne ke liye bohot zaroori hai
+        clipBehavior: Clip.none,
         children: [
           Container(
             width: double.infinity,
@@ -42,11 +42,10 @@ class PackageScreen extends StatelessWidget {
               ],
             )
           ),
-         if(!ScreenHelper.isMobile(context))
          Positioned(
             right: 40,
-            bottom: -12, // Banner ke niche se halka sa popping outward look
-            top: -40,    // Head side se upar overflow matching original mockup image
+            bottom: -12,
+            top: -40,
             child: Image.asset(
               'assets/image/shoolboy.jpg',
               fit: BoxFit.contain,
@@ -76,8 +75,10 @@ class PackageScreen extends StatelessWidget {
         ),
         const SizedBox(height: 35),
 
-        Row(
+        Flex(
           spacing: 20,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          direction: ScreenHelper.isDesktop(context) ?Axis.horizontal:Axis.vertical,
           children: [
             // Start Your Free Practice Button
             ElevatedButton(

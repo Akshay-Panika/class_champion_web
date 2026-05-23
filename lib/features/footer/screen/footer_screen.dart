@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../core/widget/responsive_font.dart';
 import '../../../core/widget/screen_helper.dart';
@@ -51,7 +52,7 @@ class FooterScreen extends StatelessWidget {
               // --- Bottom Copyright Line ---
               Center(
                 child: Text(
-                  "© 2025 Class Champion All rights reserved.",
+                  "© 2026 Class Champion All rights reserved.",
                   style: TextStyle(
                     color: Colors.grey.shade700,
                     fontSize: 12.5,
@@ -88,11 +89,11 @@ class FooterScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildFooterLink("listening"),
+                  _buildFooterLink("Instagram",FontAwesomeIcons.instagram),
                   const SizedBox(height: 14),
-                  _buildFooterLink("Speaking"),
+                  _buildFooterLink("Facebook", FontAwesomeIcons.facebook),
                   const SizedBox(height: 14),
-                  _buildFooterLink("Writing"),
+                  _buildFooterLink("Youtube", FontAwesomeIcons.youtube),
                 ],
               ),
             ),
@@ -101,11 +102,9 @@ class FooterScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildFooterLink("Reading"),
+                  _buildFooterLink("linkedin",FontAwesomeIcons.linkedin),
                   const SizedBox(height: 14),
-                  _buildFooterLink("Mock Exams"),
-                  const SizedBox(height: 14),
-                  _buildFooterLink("CEIPIP Wiki"), // As spelled on image wireframe
+                  _buildFooterLink("Others",FontAwesomeIcons.circle), // As spelled on image wireframe
                 ],
               ),
             ),
@@ -115,17 +114,30 @@ class FooterScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildFooterLink(String label) {
+  Widget _buildFooterLink(String label, FaIconData icon) {
     return InkWell(
       onTap: () {},
       mouseCursor: SystemMouseCursors.click,
-      child: Text(
-        label,
-        style: TextStyle(
-          color: Colors.grey.shade700,
-          fontWeight: FontWeight.w500,
-          fontSize: 14,
-        ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          FaIcon(
+            icon,
+            size: 16,
+            color: Colors.grey.shade700,
+          ),
+
+          const SizedBox(width: 8),
+
+          Text(
+            label,
+            style: TextStyle(
+              color: Colors.grey.shade700,
+              fontWeight: FontWeight.w500,
+              fontSize: 14,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -145,8 +157,8 @@ class _BrandDescriptionBlock extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 12,
-              backgroundColor: Colors.orange.shade100,
-              child: const Icon(Icons.face, size: 14, color: Colors.orange),
+              backgroundColor: Colors.blue.shade100,
+              child:  Icon(Icons.school, size: 14, color: Colors.blue),
             ),
             const SizedBox(width: 8),
              Text(
@@ -191,7 +203,7 @@ class _BrandDescriptionBlock extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-          color: Colors.grey.shade600,
+          color: Colors.grey.shade700,
           fontWeight: FontWeight.w600,
           fontSize: 13,
         ),
